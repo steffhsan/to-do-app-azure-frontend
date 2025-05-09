@@ -10,7 +10,7 @@ function App() {
   const [todos, setTodos] = React.useState([]);
 
   React.useEffect(() => {
-    fetch("/api/todos")
+    fetch(`${process.env.REACT_APP_API_URL}/todos`)
       .then((res) => res.json())
       .then((data) => setTodos(data))
       .catch((err) => console.error("Fehler beim Laden der Todos:", err));
@@ -25,13 +25,16 @@ function App() {
     };
 
     try {
-      const response = await fetch(`/api/todos/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updatedTodo),
-      });
+      const response = await fetch(
+        `/${process.env.REACT_APP_API_URL}/todos/${id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedTodo),
+        }
+      );
 
       const saved = await response.json();
       setTodos(todos.map((item) => (item.id === id ? saved : item)));
@@ -42,7 +45,7 @@ function App() {
 
   const deleteToDo = async (id) => {
     try {
-      await fetch(`/api/todos/${id}`, {
+      await fetch(`${process.env.REACT_APP_API_URL}/todos/${id}`, {
         method: "DELETE",
       });
       setTodos(todos.filter((item) => item.id !== id));
@@ -56,7 +59,7 @@ function App() {
     const updated = { ...todo, done: !todo.done };
 
     try {
-      const res = await fetch(`/api/todos/${id}`, {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/todos/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -69,13 +72,16 @@ function App() {
 
       if (updated.done) {
         setTimeout(async () => {
-          const archiveRes = await fetch(`/api/todos/${id}`, {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ ...saved, archived: true }),
-          });
+          const archiveRes = await fetch(
+            `${process.env.REACT_APP_API_URL}/todos/${id}`,
+            {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ ...saved, archived: true }),
+            }
+          );
 
           const archivedTodo = await archiveRes.json();
 
@@ -91,7 +97,7 @@ function App() {
 
   const handleAddToDo = async () => {
     try {
-      const response = await fetch("/api/todos", {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/todos`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
