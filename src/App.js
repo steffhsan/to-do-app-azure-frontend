@@ -116,6 +116,8 @@ function App() {
       });
 
       const newTodo = await response.json();
+      console.log("Neues Todo erhalten:", newTodo);
+
       setTodos([...todos, newTodo]);
     } catch (err) {
       console.error("Fehler beim Erstellen des Todos:", err);
