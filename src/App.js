@@ -26,7 +26,7 @@ function App() {
 
     try {
       const response = await fetch(
-        `/${process.env.REACT_APP_API_URL}/todos/${id}`,
+        `${process.env.REACT_APP_API_URL}/todos/${id}`,
         {
           method: "PUT",
           headers: {

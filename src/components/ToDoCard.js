@@ -1,4 +1,3 @@
-import { Button } from "bootstrap";
 import React from "react";
 
 const ToDoCard = ({
@@ -15,12 +14,6 @@ const ToDoCard = ({
 
   const [newTitle, setNewTitle] = React.useState(title);
   const [newText, setNewText] = React.useState(text);
-
-  const handleSave = (field) => {
-    onUpdate(newTitle, newText);
-    if (field === "title") setIsEditingTitle(false);
-    if (field === "text") setIsEditingText(false);
-  };
 
   return (
     <div className={`card mb-3 ${done ? "todo-done" : ""}`}>
